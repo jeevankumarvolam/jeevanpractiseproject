@@ -20,5 +20,6 @@ public class BookingRequest {
     private BookingPeriod bookingPeriod;
     @NotEmpty
     private String user;
+    private transient String transientVariable;
 
 }

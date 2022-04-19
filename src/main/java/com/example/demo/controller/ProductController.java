@@ -12,6 +12,8 @@ import com.example.demo.service.SameBrandProductsService;
 import com.example.demo.service.UpdateProductUnitsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.UUID;
-
+@Profile( {"local", "default"})
 @RestController
 @Slf4j
 public class ProductController {
@@ -42,10 +44,12 @@ public class ProductController {
 	@Autowired
 	private UpdateProductUnitsService updateProductUnitsService;
 
-	private AllProductResponse allProductResponse=new AllProductResponse();
+
 	@GetMapping("allproducts")
 	public ResponseEntity<AllProductResponse> getAllProducts(){
+		AllProductResponse allProductResponse=new AllProductResponse();
 		allProductResponse.setProducts(productrepo.findAll());
+		log.info(String.valueOf(allProductResponse));
 		ResponseEntity<AllProductResponse> t=new ResponseEntity<>(allProductResponse, HttpStatus.OK);
 		return t;
 	}
@@ -69,7 +73,10 @@ public class ProductController {
 
 	@GetMapping("/product/{id}")
 	public ProductResponse displaydata(@PathVariable String id) throws ProductNotFoundException {
+
+log.info("hai jeevan");
 		return (productrepo.findById(UUID.fromString(id))
 				.orElseThrow(() -> new ProductNotFoundException("product not found really")));
+
 	}
 }

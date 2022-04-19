@@ -2,8 +2,6 @@ package com.example.demo.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class UuidValidator implements ConstraintValidator<ValidUuid, UUID> {
@@ -11,8 +9,7 @@ public class UuidValidator implements ConstraintValidator<ValidUuid, UUID> {
 
     @Override
     public void initialize(ValidUuid validUuid) {
-        List<List<Integer>> inputList=new ArrayList<>();
-        inputList.clear();
+    
     }
 
     @Override

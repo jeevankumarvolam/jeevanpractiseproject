@@ -4,7 +4,6 @@ package com.example.demo.exceptionfamily;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.example.demo.entity.response.BookingNotFoundResponse;
 import com.example.demo.entity.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,7 @@ public class MyExceptionHandler {
 
     @ExceptionHandler(BrandServiceException.class)
     public ResponseEntity<String> brandServiceException(BrandServiceException e) {
-        return new ResponseEntity<String>(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -39,10 +38,11 @@ public class MyExceptionHandler {
     public ResponseEntity<String> productNotFoundException(ProductNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(BookingNotFoundException.class)
     public ResponseEntity<BookingNotFoundResponse> BookingResponseException(BookingNotFoundException e) {
 
-        return new ResponseEntity<BookingNotFoundResponse>(e.getBookingNotFoundResponse(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(e.getBookingNotFoundResponse(), HttpStatus.NOT_FOUND);
     }
 
 }

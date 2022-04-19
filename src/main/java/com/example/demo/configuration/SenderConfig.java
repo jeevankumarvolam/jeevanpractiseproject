@@ -13,9 +13,6 @@ public class SenderConfig {
 
     @Bean
     public Queue queue() {
+
         return new Queue(queueName, true);
-    }
-
-
-
-}
+    }}

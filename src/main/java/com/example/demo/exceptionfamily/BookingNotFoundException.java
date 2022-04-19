@@ -9,11 +9,10 @@ import lombok.Setter;
 public class BookingNotFoundException extends Exception {
     private BookingNotFoundResponse bookingNotFoundResponse;
 
-   public BookingNotFoundException(String message){
-   bookingNotFoundResponse=   new BookingNotFoundResponse();
-   bookingNotFoundResponse.setError(message);
-   }
-
+    public BookingNotFoundException(String message) {
+        bookingNotFoundResponse = new BookingNotFoundResponse();
+        bookingNotFoundResponse.setError(message);
+    }
 
 
 }

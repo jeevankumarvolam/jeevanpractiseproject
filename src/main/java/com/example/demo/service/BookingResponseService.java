@@ -6,42 +6,50 @@ import com.example.demo.entity.Self;
 import com.example.demo.entity.response.BookingResponse;
 import com.example.demo.exceptionfamily.BookingNotFoundException;
 import com.example.demo.repo.BookingRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Service
+@Slf4j
 public class BookingResponseService {
-    @Autowired
-    private BookingRepo bookingRepo;
+
+    private final BookingRepo bookingRepo;
     @Value("${self.link}")
     private String selfLink;
 
+    public BookingResponseService(BookingRepo bookingRepo) {
+        this.bookingRepo = bookingRepo;
+    }
+
     public BookingResponse createBookingResponse(String id) throws BookingNotFoundException {
-        BookingResponse bookingResponse=new BookingResponse();
-        Optional<Booking> entity=bookingRepo.findById(id);
-        if(entity.isPresent()){
+        BookingResponse.BookingResponseBuilder bookingResponse = BookingResponse.builder();
+        Optional<Booking> entity = bookingRepo.findById(id);
+        if (entity.isPresent()) {
             //create booking response
-         bookingResponse.setId(entity.get().getId());
-            bookingResponse.setAccId(entity.get().getAccId());
-            bookingResponse.setBookingSeason(entity.get().getBookingPeriod().getSeason());
-            bookingResponse.setBookingYear(entity.get().getBookingPeriod().getYear());
-            bookingResponse.setCreatedBy(entity.get().getCreatedBy());
-            bookingResponse.setModifiedBy(entity.get().getModifiedBy());
-            bookingResponse.setModifiedAt(entity.get().getModifiedAt());
-           bookingResponse.setCreatedAt( entity.get().getCreatedAt());
-           bookingResponse.setLinks(new Links());
-           bookingResponse.getLinks().setSelf(new Self());
-           bookingResponse.getLinks().getSelf().setHref(selfLink+id);
-          return bookingResponse;
-        }
-        else{
-            //throw error
-            throw new BookingNotFoundException("Booking not found with id "+id);
-        }
+            Hashtable<String,Integer> a = new Hashtable<>();
+            HashMap<String,Integer> k = new HashMap<>();
+          
+            bookingResponse.id(entity.get().getId()).
+                    accId(entity.get().getAccId()).
+                    bookingSeason(entity.get().getBookingPeriod().getSeason()).
+                    bookingYear(entity.get().getBookingPeriod().getYear()).
+                    createdAt(entity.get().getCreatedAt()).
+                    createdBy(entity.get().getCreatedBy()).
+                    modifiedBy(entity.get().getModifiedBy()).
+                    modifiedAt(entity.get().getModifiedAt()).links(Links.builder().
+                            self(Self.builder().href(selfLink + id).build()).build()).transientVariable(entity.get().getCheck());
 
-
+            return bookingResponse.build();
+        } else {
+            throw new BookingNotFoundException("Booking not found with id " + id);
+        }
 
 
     }

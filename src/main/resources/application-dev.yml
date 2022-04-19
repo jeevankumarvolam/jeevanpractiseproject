@@ -1,0 +1,4 @@
+server.port=8088
+
+brandservice.hostname=http://localhost:8090
+self.link=http://localhost:${server.port}/buy1/booking/

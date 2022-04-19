@@ -12,12 +12,14 @@ import javax.validation.Valid;
 
 @RestController
 public class CustomerChoiceController {
-@Autowired
-  private CustomerChoiceService cutomerChoiceService;
-@PostMapping("customerchoice")
+
+    @Autowired
+    private CustomerChoiceService cutomerChoiceService;
+
+    @PostMapping("customerchoice")
     public CustomerChoiceResponse controlCustomerChoice(@RequestBody @Valid CustomerChoiceRequest customerChoiceRequest){
 
-CustomerChoiceResponse customerChoiceResponse=cutomerChoiceService.buildCustomerChoiceResponse(customerChoiceRequest);
+     CustomerChoiceResponse customerChoiceResponse=cutomerChoiceService.buildCustomerChoiceResponse(customerChoiceRequest);
 
     return customerChoiceResponse;
 }

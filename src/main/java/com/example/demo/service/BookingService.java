@@ -11,11 +11,13 @@ import java.util.Optional;
 
 @Component
 public class BookingService {
+
     @Autowired
     private BookingRepo bookingRepo;
 
     public void mappingRequestToBooking(BookingRequest bookingRequest) {
         Booking booking = new Booking();
+
         Optional<Booking> bookingOfId =bookingRepo.findById(bookingRequest.getId());
 
         booking.setId(bookingRequest.getId());
@@ -30,6 +32,7 @@ public class BookingService {
         else{
             booking.setCreatedBy(bookingRequest.getUser());
             booking.setCreatedAt(LocalDateTime.now());}
+        booking.setCheck(bookingRequest.getTransientVariable());
         bookingRepo.save(booking);
 
 

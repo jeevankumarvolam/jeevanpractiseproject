@@ -5,8 +5,10 @@ import java.util.UUID;
 import com.example.demo.entity.BrandMarketChannel;
 import com.example.demo.entity.Department;
 import com.example.demo.entity.request.ProductRequest;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductResponse implements Comparable<ProductResponse> {
 	private String description;
 	
