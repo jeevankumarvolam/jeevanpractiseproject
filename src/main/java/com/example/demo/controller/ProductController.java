@@ -24,59 +24,60 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 import javax.validation.Valid;
 import java.util.UUID;
-@Profile( {"local", "default"})
+
+
+@Profile({"local", "default"})
 @RestController
 @Slf4j
 public class ProductController {
-	@Autowired
-	private Productrepo productrepo;
-	@Autowired
-	private RestTemplate resttemplate;
+    @Autowired
+    private Productrepo productrepo;
+    @Autowired
+    private RestTemplate resttemplate;
 
-	@Autowired
-	private SameBrandProductsService samebrandproducts;
+    @Autowired
+    private SameBrandProductsService samebrandproducts;
 
-	@Autowired
-	private BrandChannelValidateAndUpdateService brandChannelValidateAndUpdateService;
-	@Autowired
-	private UpdateProductUnitsService updateProductUnitsService;
+    @Autowired
+    private BrandChannelValidateAndUpdateService brandChannelValidateAndUpdateService;
+    @Autowired
+    private UpdateProductUnitsService updateProductUnitsService;
 
 
-	@GetMapping("allproducts")
-	public ResponseEntity<AllProductResponse> getAllProducts(){
-		AllProductResponse allProductResponse=new AllProductResponse();
-		allProductResponse.setProducts(productrepo.findAll());
-		log.info(String.valueOf(allProductResponse));
-		ResponseEntity<AllProductResponse> t=new ResponseEntity<>(allProductResponse, HttpStatus.OK);
-		return t;
-	}
+    @GetMapping("allproducts")
+    public ResponseEntity<AllProductResponse> getAllProducts() {
+        AllProductResponse allProductResponse = new AllProductResponse();
+        allProductResponse.setProducts(productrepo.findAll());
+        log.info(String.valueOf(allProductResponse));
+        ResponseEntity<AllProductResponse> t = new ResponseEntity<>(allProductResponse, HttpStatus.OK);
+        return t;
+    }
 
-	@GetMapping("/products")
-	public BulkProductsResponse findProductsByBrand(@RequestParam String brandname) {
-		return samebrandproducts.sameBrandProductsMethod(brandname);
-	}
+    @GetMapping("/products")
+    public BulkProductsResponse findProductsByBrand(@RequestParam String brandname) {
+        return samebrandproducts.sameBrandProductsMethod(brandname);
+    }
 
-	@PutMapping("product/{id}")
+    @PutMapping("product/{id}")
 
-	public ProductResponse updateUnitsInProduct(@RequestBody UnitsUpdateRequest unitUpdateValue, @PathVariable String id)
-			throws ProductNotFoundException {
-		return updateProductUnitsService.UpdateProductUnits(id, unitUpdateValue);
-	}
+    public ProductResponse updateUnitsInProduct(@RequestBody UnitsUpdateRequest unitUpdateValue, @PathVariable String id)
+            throws ProductNotFoundException {
+        return updateProductUnitsService.UpdateProductUnits(id, unitUpdateValue);
+    }
 
-	@PostMapping("product")
-	public String postProductDetails(@RequestBody @Valid ProductRequest productrequest) throws Exception {
-		return brandChannelValidateAndUpdateService.brandChannelValidateAndUpdateService(productrequest);
-	}
+    @PostMapping("product")
+    public String postProductDetails(@RequestBody @Valid ProductRequest productrequest) throws Exception {
+        return brandChannelValidateAndUpdateService.brandChannelValidateAndUpdateService(productrequest);
+    }
 
-	@GetMapping("/product/{id}")
-	public ProductResponse displaydata(@PathVariable String id) throws ProductNotFoundException {
+    @GetMapping("/product/{id}")
+    public ProductResponse displaydata(@PathVariable String id) throws ProductNotFoundException {
 
-log.info("hai jeevan");
-		return (productrepo.findById(UUID.fromString(id))
-				.orElseThrow(() -> new ProductNotFoundException("product not found really")));
+        log.info("hai jeevan");
+        return (productrepo.findById(UUID.fromString(id))
+                .orElseThrow(() -> new ProductNotFoundException("product not found really")));
 
-	}
+    }
 }

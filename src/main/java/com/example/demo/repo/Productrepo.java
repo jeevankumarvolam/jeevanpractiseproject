@@ -5,7 +5,6 @@ import com.example.demo.entity.response.ProductResponse;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +15,6 @@ public interface Productrepo extends MongoRepository<ProductResponse,UUID> {
 	List<ProductResponse> findByBrandmarketchannelBrand(String description);
 
 	List<ProductResponse> findByPriceGreaterThan(Integer price);
-
 	ProductResponse findByBrandmarketchannelAndPrice(BrandMarketChannel brandMarketChannel,Integer price);
 
 	ProductResponse findByBrandmarketchannelAndPriceOrderByUnits(BrandMarketChannel brandMarketChannel,Integer price);

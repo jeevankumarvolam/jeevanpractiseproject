@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.request.CustomerChoiceRequest;
 import com.example.demo.entity.response.CustomerChoiceResponse;
+import com.example.demo.service.BuyingTrackBookingService;
 import com.example.demo.service.CustomerChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +16,17 @@ public class CustomerChoiceController {
 
     @Autowired
     private CustomerChoiceService cutomerChoiceService;
+    @Autowired
+    private BuyingTrackBookingService buyingTrackBookingService;
 
     @PostMapping("customerchoice")
-    public CustomerChoiceResponse controlCustomerChoice(@RequestBody @Valid CustomerChoiceRequest customerChoiceRequest){
+    public CustomerChoiceResponse createCustomerChoice(@RequestBody @Valid CustomerChoiceRequest customerChoiceRequest) {
+        buyingTrackBookingService.assignBuyingToBooking(customerChoiceRequest.getAccid(), customerChoiceRequest.getStartBookingPeriod()
+                , customerChoiceRequest.getEndBookingPeriod(), customerChoiceRequest.getBuyingTrack());
+        CustomerChoiceResponse customerChoiceResponse = cutomerChoiceService.buildCustomerChoiceResponse(customerChoiceRequest);
 
-     CustomerChoiceResponse customerChoiceResponse=cutomerChoiceService.buildCustomerChoiceResponse(customerChoiceRequest);
-
-    return customerChoiceResponse;
-}
-
-
+        return customerChoiceResponse;
+    }
 
 
 }
