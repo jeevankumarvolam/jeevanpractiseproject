@@ -4,12 +4,14 @@ import com.example.demo.entity.CustomerChoice;
 import com.example.demo.entity.request.CustomerChoiceRequest;
 import com.example.demo.entity.response.CustomerChoiceResponse;
 import com.example.demo.repo.CustomerChoiceRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Slf4j
 @Service
 public class CustomerChoiceService {
 
@@ -22,7 +24,11 @@ public class CustomerChoiceService {
         CustomerChoiceResponse customerChoiceResponse;
         CustomerChoice customerChoiceToBeSaved = new CustomerChoice();
         LocalDateTime time = LocalDateTime.now();
-
+        log.warn("warning log");
+        log.error("error log");
+        log.info("info log");
+        log.debug("debug log");
+        log.trace("trace log");
         customerChoiceToBeSaved.setAccid(customerChoiceRequest.getAccid());
         customerChoiceToBeSaved.setBuyingTrack(customerChoiceRequest.getBuyingTrack());
         customerChoiceToBeSaved.setStartBookingPeriod(customerChoiceRequest.getStartBookingPeriod());

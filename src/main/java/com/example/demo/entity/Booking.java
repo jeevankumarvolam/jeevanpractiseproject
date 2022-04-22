@@ -24,6 +24,7 @@ public class Booking {
     private String modifiedBy;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private String buyingTrack;
     @Transient
     private transient String check;
 }
