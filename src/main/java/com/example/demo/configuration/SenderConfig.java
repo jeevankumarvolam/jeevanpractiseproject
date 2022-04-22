@@ -10,14 +10,11 @@ import org.springframework.context.annotation.Configuration;
 public class SenderConfig {
     @Value("${queue.sender.name}")
     private String senderQueueName;
-
-
     @Value("${queue.name}")
     private String queueName;
 
     @Bean
     public Queue senderQueue() {
-
         return new Queue(senderQueueName, true);
     }
 
@@ -27,6 +24,4 @@ public class SenderConfig {
 
         return new Queue(queueName, true);
     }
-
-
 }

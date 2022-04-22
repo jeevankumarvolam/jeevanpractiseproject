@@ -20,8 +20,8 @@ public class CustomerChoiceController {
     private BuyingTrackBookingService buyingTrackBookingService;
 
     @PostMapping("customerchoice")
-    public CustomerChoiceResponse controlCustomerChoice(@RequestBody @Valid CustomerChoiceRequest customerChoiceRequest) {
-        buyingTrackBookingService.addBuyingTrackToBooking(customerChoiceRequest.getAccid(), customerChoiceRequest.getStartBookingPeriod()
+    public CustomerChoiceResponse createCustomerChoice(@RequestBody @Valid CustomerChoiceRequest customerChoiceRequest) {
+        buyingTrackBookingService.assignBuyingToBooking(customerChoiceRequest.getAccid(), customerChoiceRequest.getStartBookingPeriod()
                 , customerChoiceRequest.getEndBookingPeriod(), customerChoiceRequest.getBuyingTrack());
         CustomerChoiceResponse customerChoiceResponse = cutomerChoiceService.buildCustomerChoiceResponse(customerChoiceRequest);
 
